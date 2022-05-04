@@ -41,4 +41,35 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return employees;
 	}
 
+	public Employee saveEmployee(Employee employee) {
+		Employee emp=new Employee();
+		String sql="INSERT INTO employee VALUES (?,?,?)";
+	//	Object[] args={employee.getEmployeeId(),employee.getEmployeeName(),employee.getAge()};
+		int result=jdbcTemplate.update(sql, employee.getEmployeeId(),employee.getEmployeeName(),employee.getAge());
+		
+		if(result==1)
+		{
+			emp=employee;
+			return emp;
+		}
+		
+		return emp ;
+	}
+
+	public Employee updateEmployee(Employee employee, int id) {
+
+		Employee emp=new Employee();
+		
+		String sql="UPDATE employee SET emp_name=?,emp_age=? where emp_id=?";
+		Object[] args={employee.getEmployeeName(),employee.getAge(),id};
+		int result = jdbcTemplate.update(sql, args);
+		
+		if(result==1)
+		{
+			emp=employee;
+			return emp;
+		}
+		return emp;
+	}
+
 }
